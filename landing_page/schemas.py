@@ -14,7 +14,7 @@ class ContactUsMessageSchema(BaseModel):
     date_submitted: date
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 class CreateContactUsMessageSchema(BaseModel):
     first_name: str
@@ -25,19 +25,22 @@ class CreateContactUsMessageSchema(BaseModel):
     message: str
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 class ClientRegistrationSchema(BaseModel):
-    id: int
+    message: str
     email: EmailStr
-    date_registered: date
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 class CreateClientRegistrationSchema(BaseModel):
     email: EmailStr
 
     class Config:
-        orm_mode = True
+        from_attributes = True
+
+
+class ErrorResponseSchema(BaseModel):
+    message: str

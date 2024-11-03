@@ -1,5 +1,9 @@
+# django
 from django.db import IntegrityError
+# third party
 from ninja import Router
+# local
+from api_auth.api import APIKeyAuth
 from .models import ClientRegistration, ContactUsMessage
 from .schemas import ClientRegistrationSchema, CreateClientRegistrationSchema, CreateContactUsMessageSchema, \
     ContactUsMessageSchema, ErrorResponseSchema
@@ -7,7 +11,7 @@ from .schemas import ClientRegistrationSchema, CreateClientRegistrationSchema, C
 router = Router()
 
 
-@router.post("/client_registration",
+@router.post("/client_registration", auth= APIKeyAuth(),
              response={201: ClientRegistrationSchema,
                        400: ErrorResponseSchema,
                        405: ErrorResponseSchema,
@@ -35,7 +39,7 @@ def create_client_registration(request, data: CreateClientRegistrationSchema):
         return 400, {"message": "An unexpected error occurred: " + str(e)}
 
 
-@router.post("/contact_us_message",
+@router.post("/contact_us_message", auth= APIKeyAuth(),
              response={201: ContactUsMessageSchema,
                        400: ErrorResponseSchema,
                        405: ErrorResponseSchema,})
